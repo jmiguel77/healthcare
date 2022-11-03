@@ -1,5 +1,4 @@
-import User from "../models/user.js";
-import {DataTypes} from "sequelize";
+import {DataTypes} from 'sequelize';
 
 export class UserRepository {
     userEntity;
@@ -13,7 +12,8 @@ export class UserRepository {
             },
             email: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: false,
+                unique: true
             },
             password: {
                 type: DataTypes.STRING,
@@ -24,7 +24,7 @@ export class UserRepository {
         this.userEntity.sync().then();
     }
 
-    addUser = async (user) => {
+    add = async (user) => {
         await this.userEntity.create({
             name: user.name,
             email: user.email,

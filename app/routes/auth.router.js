@@ -1,9 +1,20 @@
 import express from 'express';
+import useCases from '../use-cases/index.js';
+import extractErrorMessage from '../utils/error.utils.js';
 
 const router = express.Router();
 
 router.post('/signup', (request, response) => {
-    response.send('ok');
+    useCases.userUseCases.addUser(request.body)
+        .then(() => {
+            response.status(201);
+            response.send();
+        })
+        .catch(err => {
+            response.status(500);
+            response.send(extractErrorMessage(err));
+        });
+
 });
 
 router.post('/login', (request, response) => {

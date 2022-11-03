@@ -1,9 +1,19 @@
 import express from 'express';
+import UseCases from '../use-cases/index.js';
+import extractErrorMessage from '../utils/error.utils.js';
 
 const router = express.Router();
 
 router.post('/', (request, response) => {
-    response.send('add new drug');
+    UseCases.drugsUseCases.addDrug(request.body)
+        .then(() => {
+            response.status(201);
+            response.send();
+        })
+        .catch(err => {
+            response.status(500);
+            response.send(extractErrorMessage(err))
+        });
 });
 
 router.get('/', (request, response) => {

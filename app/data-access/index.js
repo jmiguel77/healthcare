@@ -1,5 +1,6 @@
-import {Sequelize, DataTypes} from 'sequelize';
-import {UserRepository} from "./user.repository.js";
+import {Sequelize} from 'sequelize';
+import {UserRepository} from './user.repository.js';
+import {DrugRepository} from './drug.repository.js';
 
 const sequelize = new Sequelize(
     'healthcaredb',
@@ -13,7 +14,9 @@ const sequelize = new Sequelize(
 );
 
 const userRepository = new UserRepository(sequelize);
+const drugRepository = new DrugRepository(sequelize);
 
 export default {
-    userRepository
+    userRepository,
+    drugRepository
 }
