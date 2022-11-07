@@ -29,6 +29,6 @@ router.use((request, response, next) => {
 
 router.use('/auth', authRouter);
 router.use('/drugs', drugsRouter);
-router.use('/vaccination', vaccinationRouter);
+router.use('/vaccinations', vaccinationRouter);
 
 export default router;

@@ -14,7 +14,7 @@ const isValidToken = (token) => {
 const generateToken = (payload) => {
     const {sign} = jwt;
     return sign({payload}, process.env.HC_JWT_SECRET, {
-        expiresIn: '1h'
+        expiresIn: process.env.HC_JWT_DURATION
     });
 }
 

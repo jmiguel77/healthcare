@@ -1,4 +1,5 @@
 import {DataTypes} from 'sequelize';
+import {Drug} from '../models/drug.js';
 
 export class DrugRepository {
     drugEntity;
@@ -41,5 +42,56 @@ export class DrugRepository {
             maxDose: drug.maxDose,
             availableAt: drug.availableAt
         });
+    }
+
+    fetch = async () => {
+        const entities = await this.drugEntity.findAll();
+        const drugs = [];
+        entities.forEach((entity) => {
+            drugs.push(this.#toDrug(entity));
+        });
+        return drugs;
+    }
+
+    fetchById = async (id) => {
+        const entity = await this.#fetchEntity(id);
+        return this.#toDrug(entity);
+    }
+
+    update = async (id, drug) => {
+        const entity = this.#fetchEntity(id);
+        entity.name = drug.name;
+        entity.approved = drug.approved;
+        entity.minDose = drug.minDose;
+        entity.maxDose = drug.maxDose;
+        entity.availableAt = drug.availableAt;
+        await entity.save();
+    }
+
+    delete = async (id) => {
+        const entity = this.#fetchEntity(id);
+        await entity.destroy();
+    }
+
+    #fetchEntity = async (id) => {
+        const entity = await this.drugEntity.findOne({
+            where: {
+                id
+            }
+        });
+        if (!entity) {
+            throw 'Not found';
+        }
+        return entity;
+    }
+
+    #toDrug = (entity) => {
+        return new Drug(
+            entity.dataValues.id,
+            entity.dataValues.name,
+            entity.dataValues.approved,
+            entity.dataValues.minDose,
+            entity.dataValues.maxDose,
+            entity.dataValues.availableAt);
     }
 }
