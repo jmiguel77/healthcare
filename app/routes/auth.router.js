@@ -18,7 +18,14 @@ router.post('/signup', (request, response) => {
 });
 
 router.post('/login', (request, response) => {
-    response.send('some token');
+    useCases.userUseCases.validateUser(request.body)
+        .then((token) => {
+            response.json({token});
+        })
+        .catch((err) => {
+            response.status(500);
+            response.send(extractErrorMessage(err));
+        });
 })
 
 export default router;

@@ -1,4 +1,5 @@
 import {DataTypes} from 'sequelize';
+import User from "../models/user.js";
 
 export class UserRepository {
     userEntity;
@@ -30,5 +31,17 @@ export class UserRepository {
             email: user.email,
             password: user.password
         });
+    }
+
+    fetch = async (email) => {
+        const foundUser = await this.userEntity.findOne({
+            where: {
+                email: email
+            }
+        });
+        if (foundUser == null) {
+            return null;
+        }
+        return new User(foundUser.id, foundUser.name, foundUser.email, foundUser.password);
     }
 }
