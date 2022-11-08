@@ -28,6 +28,14 @@ export class VaccinationsUseCases {
         if (data === undefined || data === null) {
             throw 'Data received is empty';
         }
+
+        if (data.name === undefined || data.name === null
+            || data.dose === undefined || data.dose === null
+            || data.date === undefined || data.date === null
+            || data.drugId === undefined || data.drugId === null) {
+            throw 'Name, dose, date and drugId cannot be null';
+        }
+
         let date = null;
         if (typeof data.date === 'string') {
             date = new Date(data.date);

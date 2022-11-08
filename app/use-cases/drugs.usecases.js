@@ -27,6 +27,14 @@ export class DrugsUseCases {
         if (data === undefined || data === null) {
             throw 'Data received is empty';
         }
+        if (data.name === undefined || data.name === null
+            || data.approved === undefined || data.approved === null
+            || data.minDose === undefined || data.minDose === null
+            || data.maxDose === undefined || data.maxDose === null
+            || data.availableAt === undefined || data.availableAt === null) {
+            throw 'name, approved, minDose, maxDose and availableAt must not be null';
+        }
+
         let availableAt = null;
         if (typeof data.availableAt === 'string') {
             availableAt = new Date(data.availableAt);
