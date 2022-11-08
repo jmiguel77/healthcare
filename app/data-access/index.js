@@ -4,11 +4,11 @@ import {DrugRepository} from './drug.repository.js';
 import {VaccinationRepository} from "./vaccination.repository.js";
 
 const sequelize = new Sequelize(
-    'healthcaredb',
-    'mono',
-    'mono',
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASS,
     {
-        host: 'localhost',
+        host: process.env.DB_HOST,
         dialect: 'postgres',
         logging: console.log
     }

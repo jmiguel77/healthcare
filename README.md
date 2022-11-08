@@ -3,6 +3,17 @@ Notifications backend service
 
 # Environment variables
 
+#### DB_HOST
+Database host
+Example value: localhost
+
+#### DB_NAME
+Name of the database to be used
+Example value: healthcaredb
+
+#### DB_USER / DB_PASS
+Database credentials
+
 #### HC_JWT_DURATION
 Duration of the created token 
 Example value: 1h

@@ -1,0 +1,34 @@
+version: '3.9'
+services:
+    healthcare-db:
+        image: postgres:14.3-alpine
+        container_name: healthcare-db
+        ports:
+           - "5432:5432"
+        environment:
+            - LC_ALL=C.UTF-8
+            - POSTGRES_DB=healthcaredb
+            - POSTGRES_USER=mono
+            - POSTGRES_PASSWORD=mono
+            - POSTGRES_PORT=5432
+        healthcheck:
+            test: "exit 0"
+
+    healthcare-server:
+        container_name: healthcare-server
+        ports:
+           - "5000:5000"
+        build:
+           context: .
+           dockerfile: AppDockerfile
+        environment:
+            - DB_HOST=healthcare-db
+            - DB_NAME=healthcaredb
+            - DB_USER=mono
+            - DB_PASS=mono
+            - HC_JWT_DURATION=1h
+            - HC_JWT_SECRET=somesecret
+            - HC_PASSWORD_SALT=10
+        depends_on:
+            healthcare-db:
+                condition: service_healthy
